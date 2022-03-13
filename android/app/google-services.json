@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "494918227757",
+    "project_id": "hood-e920b",
+    "storage_bucket": "hood-e920b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494918227757:android:a367c6a13fede725a865a4",
+        "android_client_info": {
+          "package_name": "com.hood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494918227757-24rqdh5oiro8f2hph8akai63a9fec36h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hood",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "494918227757-dsko8cfjscn8bkfh4t4vnubh4bghgipp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtyAq1_-F-LsnWXYFAxp6wWYw403RdDJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494918227757-dsko8cfjscn8bkfh4t4vnubh4bghgipp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
