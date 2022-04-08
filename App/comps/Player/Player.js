@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text} from 'react-native';
-import Slider from "react-native-slider";
-import { SkipPrevious } from '@mui/icons-material';
+import Slider from '@react-native-community/slider';
+// import { SkipPrevious } from '@mui/icons-material';
 
 const Player = () => {
 
@@ -39,8 +39,8 @@ const Player = () => {
             maximumTrackTintColor="#7D7D7D"
             />
 
-            <SkipPrevious
-            />
+            {/* <SkipPrevious */}
+            {/* /> */}
 
         </View>
       )

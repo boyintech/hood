@@ -9,21 +9,42 @@ import {
   useColorScheme,
   Dimensions,
   View,
+  Image
 } from 'react-native';
 
 
 const Main =(props) => {
   const rwidth = Dimensions.get('window').width;
   return (
-    <View style={{height:'100%', width: '100%', backgroundColor: '#292929', justifyContent: 'center' }}>
-      <View style={{height: '100%', width: '60%', backgroundColor: '#3E3E3E', position: 'absolute', borderTopEndRadius: 50, borderBottomEndRadius: 50, justifyContent: 'flex-end'}}>
-          <View style={{height: '70%', width: '65%', backgroundColor: '#515151', alignSelf: 'flex-end', borderRadius: 100, borderTopEndRadius: 0, borderBottomEndRadius: 50}}>
+    <View style={{height:'100%', width: '100%',}}>
+        <Image 
+        style = {{height: '100%', width: '100%', position: 'absolute'}}
+        resizeMethod = 'resize'
+        resizeMode = 'stretch'
+        source = {require('../assets/Vinyl.png')}
+        />
+        <View style={{height: '60%'}}>
+        <Image 
+        style = {{height: '100%', width: '95%', alignSelf: 'center'}}
+        resizeMethod = 'resize'
+        resizeMode = 'contain'
+        source = {require('../assets/Disc.png')}
+        />  
+        </View>
+        <View>
+          <Text style={{fontSize: 22, alignSelf: 'center'}}>Enjoy the world of music with HooD</Text>
+            <TouchableOpacity onPress={() => props.navigation.navigate("Login")} style={{justifyContent: 'center',backgroundColor: '#FFF', marginTop: 30, width: '70%', height: '22.5%', alignSelf: 'center', borderRadius: 7, shadowOffset: {
+                    width: 0,
+                    height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
 
-          </View>
-      </View>
-      <TouchableOpacity onPress={() => props.navigation.navigate("Login")} style={{height:100,  width: 100, backgroundColor: '#484848', borderRadius: 50, alignSelf: 'flex-end', marginRight: .25*rwidth}}>
-
-      </TouchableOpacity>
+                elevation: 5,}}>
+                <Text style={{alignSelf: 'center', fontSize: 24, fontWeight: 'bold', color: '#000000'}}>Lets Start</Text>
+            </TouchableOpacity>
+        </View>
+        
     </View>
   );
 };
