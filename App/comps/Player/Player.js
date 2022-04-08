@@ -1,19 +1,20 @@
-import React from 'react'
-import {View, Text} from 'react-native';
+import React, {useRef} from 'react'
+import {View, Text, Animated} from 'react-native';
 import Slider from '@react-native-community/slider';
 // import { SkipPrevious } from '@mui/icons-material';
 
 const Player = () => {
 
-
+  const dynheight = useRef(new Animated.Value(1000)).current;
+  const dynOpacity = useRef(new Animated.Value(1)).current;
   const Swipe = () => {
       return (
-          <View style={{justifyContent: 'center'}}>
+          <Animated.View style={[{justifyContent: 'center'}, {opacity: dynOpacity}]}>
             <View style={{height: '10%', marginBottom: 10, backgroundColor: '#7D7D7D', width: '25%', borderRadius: 25, alignSelf: 'center'}}>
             </View>
             <View style={{height: 10, width: 10, backgroundColor: '#7D7D7D', borderRadius: 100, alignSelf: 'center'}}>
             </View>
-          </View>
+          </Animated.View>
       )
   }
 

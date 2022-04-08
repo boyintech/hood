@@ -39,7 +39,7 @@ const Header = () => {
 const SongListComponent = () => {
     return (
             <View
-            style={{height: '30%', width: '100%', flexDirection: 'row',}}>
+            style={{height: '8%', width: '100%', flexDirection: 'row',}}>
                 <View
                 style={{height: '80%', width: '15%', backgroundColor: '#83B29F', borderRadius: 10, marginLeft: '5%'}}>
                     
@@ -59,8 +59,7 @@ const SongListComponent = () => {
         );
 }
 
-const Home = (props) => {
-    console.log(SongList);    
+const Home = (props) => { 
     return (
     <View style={{height:'100%', width: '100%' ,alignContent: "center",}}>
         <Image 
@@ -69,7 +68,7 @@ const Home = (props) => {
         resizeMode = 'stretch'
         source = {require('../../assets/Vinyl.png')}
         />
-    {/* <Player /> */}
+    <Player />
     <View style={{height: '15%', flexDirection: 'column', }}>
     <Header />
     </View>
@@ -77,10 +76,10 @@ const Home = (props) => {
       // contentContainerStyle={styles.contentContainer}
       style={{}}
     >
-      {<SongListComponent />
-            // SongList.map((data) => {
-            // return ();
-            // })
+      {
+            SongList.map((data) => {
+            return (<SongListComponent key={data.id} />);
+            })
       }
     </ScrollView>
     </View>
