@@ -68,7 +68,6 @@ const Home = (props) => {
         resizeMode = 'stretch'
         source = {require('../../assets/Vinyl.png')}
         />
-    <Player />
     <View style={{height: '15%', flexDirection: 'column', }}>
     <Header />
     </View>
@@ -82,6 +81,7 @@ const Home = (props) => {
             })
       }
     </ScrollView>
+    <Player />
     </View>
     );
 }
