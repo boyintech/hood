@@ -71,16 +71,18 @@ const Home = (props) => {
     <View style={{height: '15%', flexDirection: 'column', }}>
     <Header />
     </View>
-    <ScrollView
-      // contentContainerStyle={styles.contentContainer}
-      style={{}}
-    >
-      {
-            SongList.map((data) => {
-            return (<SongListComponent key={data.id} />);
-            })
-      }
-    </ScrollView>
+    <View  style={{height: '60%'}}>
+        <ScrollView
+        // contentContainerStyle={styles.contentContainer}
+        style={{}}
+        >
+        {
+                SongList.map((data) => {
+                return (<SongListComponent key={data.id} />);
+                })
+        }
+        </ScrollView>
+    </View>
     <Player />
     </View>
     );

@@ -34,7 +34,7 @@ const Login = (props) => {
                 shadowRadius: 3.84,
 
                 elevation: 5,}}>
-                <Text style={{alignSelf: 'center', fontSize: 18, fontWeight: 'bold'}}>Login</Text>
+                <Text style={{alignSelf: 'center', fontSize: 18, fontWeight: 'bold', color: '#FFF'}}>Login</Text>
             </TouchableOpacity>
             </View>
     </View>

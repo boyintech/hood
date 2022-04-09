@@ -39,7 +39,7 @@ const OTP = (props) => {
                 shadowRadius: 3.84,
 
                 elevation: 5,}}>
-                <Text style={{alignSelf: 'center', fontSize: 18, fontWeight: 'bold'}}>Verify</Text>
+                <Text style={{alignSelf: 'center', fontSize: 18, fontWeight: 'bold', color: '#FFF'}}>Verify</Text>
             </TouchableOpacity>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                 <Text style={{fontSize: 18}}>Wrong Number? </Text>

@@ -6,26 +6,23 @@ import Slider from '@react-native-community/slider';
 const Player = () => {
 
   let Height = Dimensions.get('window').height;
-  let dynheight = useRef(new Animated.Value(Height*.1)).current;
+  let dynheight = useRef(new Animated.Value(Height*.15)).current;
   const dynOpacity = useRef(new Animated.Value(0)).current;
 
-  const [isMinimized, setMinizedState] = useState(false);
+  const [isMinimized, setMinizedState] = useState(true);
 
   const changePlayerSize = () => {
-            Animated.timing(dynheight, {
-                toValue: Height,
+            Animated.spring(dynheight, {
+                toValue: isMinimized ? Height : Height * .2,
                 timing: 100,
                 useNativeDriver: false
-            }).start();
+            }).start(() => setMinizedState(!isMinimized));
     }
 
   const Swipe = () => {
       return (
           <View style={{justifyContent: 'center', }}>
-            <TouchableOpacity onPress={changePlayerSize} style={{height: '10%', marginBottom: 10, backgroundColor: '#7D7D7D', width: '25%', borderRadius: 25, alignSelf: 'center'}}>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setMinizedState(!isMinimized)} style={{backgroundColor:'red', height: 100, width: 100}}>
-            <Text style={{color: '#FFF', fontSize: 20}}>{ '' + isMinimized }</Text>
+            <TouchableOpacity onPress={() => changePlayerSize()} style={{height: '10%', marginBottom: 10, backgroundColor: '#7D7D7D', width: '25%', borderRadius: 25, alignSelf: 'center'}}>
             </TouchableOpacity>
             <View style={{height: 10, width: 10, backgroundColor: '#7D7D7D', borderRadius: 100, alignSelf: 'center'}}>
             </View>
@@ -71,14 +68,14 @@ const Player = () => {
   }
   return (
 
-    <Animated.View style={[{ height: '100%', width: '100%', position: 'absolute', alignSelf: 'flex-end'}]}>
+    <Animated.View style={[{ height: dynheight, width: '100%', position: 'absolute', backgroundColor: '#3E3E3E', alignSelf: 'flex-end', bottom: 0 }]}>
         <View style={{height: '95%', width: '95%', backgroundColor: '#3E3E3E', borderRadius: 25, alignSelf: 'center'}}>
-          <View style={{width: '100%', paddingHorizontal: '10%', }}>
-             <Swipe />
-             <Cover />
-             <Controls />
-             <Related />
-          </View>
+          <Animated.View style={{width: '100%', paddingHorizontal: '10%', flexDirection: isMinimized ? 'row' : 'column'  } }>
+            <Swipe />
+            <Cover />
+            <Controls />
+            <Related />
+          </Animated.View>
 
         </View>
     </Animated.View>
