@@ -3,6 +3,7 @@ import {View, Text, TextInput, Image, ScrollView} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Player from '../Player/Player';
 import SongList from './SongList.json';
+import SongListComponent from '../Player/SongListComponent.js';
 
 const Header = () => {
     return (
@@ -36,29 +37,6 @@ const Header = () => {
         );
 }
 
-const SongListComponent = () => {
-    return (
-            <View
-            style={{height: '8%', width: '100%', flexDirection: 'row',}}>
-                <View
-                style={{height: '80%', width: '15%', backgroundColor: '#83B29F', borderRadius: 10, marginLeft: '5%'}}>
-                    
-                </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '70%', }}>
-                <View style={{ marginLeft: '4%' }}>
-                    <Text style={{color: '#FFF', fontWeight: '500'}}>Song Name</Text>
-                    <Text style={{color: '#FFF', fontWeight: '500', marginTop: 3}}>03 : 10</Text>
-                </View>
-                <View style={{ flexDirection: 'row', }}>
-                    <Text style={{fontSize: 40}}>·</Text>
-                    <Text style={{fontSize: 40}}>·</Text>
-                    <Text style={{fontSize: 40}}>·</Text>
-                </View>
-                </View>
-            </View>
-        );
-}
-
 const Home = (props) => { 
     return (
     <View style={{height:'100%', width: '100%' ,alignContent: "center",}}>
@@ -71,7 +49,7 @@ const Home = (props) => {
     <View style={{height: '15%', flexDirection: 'column', }}>
     <Header />
     </View>
-    <View  style={{height: '60%'}}>
+    <View  style={{}}>
         <ScrollView
         // contentContainerStyle={styles.contentContainer}
         style={{}}

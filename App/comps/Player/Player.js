@@ -1,83 +1,142 @@
 import React, {useRef, useState} from 'react'
-import {View, Text, Animated, TouchableOpacity, Dimensions} from 'react-native';
-import Slider from '@react-native-community/slider';
-// import { SkipPrevious } from '@mui/icons-material';
+import {View, Text, Animated, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+// import Slider from '@react-native-community/slider';
+import SongListComponent from './SongListComponent.js';
+import SongList from '../Home/SongList.json';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 const Player = () => {
 
   let Height = Dimensions.get('window').height;
-  let dynheight = useRef(new Animated.Value(Height*.15)).current;
+  let Width = Dimensions.get('window').width;
+  let dynheight = useRef(new Animated.Value(Height*.11)).current;
   const dynOpacity = useRef(new Animated.Value(0)).current;
+  const coverHeight = useRef(new Animated.Value(Height*.08)).current;
+  const coverWidth = useRef(new Animated.Value(Height*.08)).current;
+  const marginCheck = useRef(new Animated.Value(0)).current;
+
 
   const [isMinimized, setMinizedState] = useState(true);
+  const [thumbIcon, setthumbIcon] = useState();
+
+  Icon.getImageSource('circle', 20, 'white')
+   .then(source => setthumbIcon(source));
 
   const changePlayerSize = () => {
-            Animated.spring(dynheight, {
-                toValue: isMinimized ? Height : Height * .2,
+      Animated.parallel([
+                Animated.timing(coverHeight, {
+                  toValue: isMinimized ? Height*.4 : Height*.08,
+                  timing: 0,
+                  useNativeDriver: false
+                }),
+                Animated.timing(coverWidth, {
+                  toValue: isMinimized ? Width * .75 : Height*.08,
+                  timing: 0,
+                  useNativeDriver: false
+                }),
+                Animated.timing(dynheight, {
+                toValue: isMinimized ? Height*.95 : Height * .11,
                 timing: 100,
                 useNativeDriver: false
-            }).start(() => setMinizedState(!isMinimized));
+            }),
+                Animated.timing(marginCheck, {
+                  toValue: isMinimized ? Width*.2 : 0,
+                  timing: 300,
+                  useNativeDriver: false
+                })
+        ]).start();
+      setMinizedState(!isMinimized);
     }
 
   const Swipe = () => {
       return (
-          <View style={{justifyContent: 'center', }}>
-            <TouchableOpacity onPress={() => changePlayerSize()} style={{height: '10%', marginBottom: 10, backgroundColor: '#7D7D7D', width: '25%', borderRadius: 25, alignSelf: 'center'}}>
+          <View style={{justifyContent: 'center', marginTop: 10 }}>
+            <TouchableOpacity onPress={() => changePlayerSize()} style={{height: 10, marginBottom: 10, backgroundColor: '#7D7D7D', width: '25%', borderRadius: 25, alignSelf: 'center'}}>
             </TouchableOpacity>
-            <View style={{height: 10, width: 10, backgroundColor: '#7D7D7D', borderRadius: 100, alignSelf: 'center'}}>
-            </View>
           </View>
       )
   }
 
   const Cover = () => {
     return (
-      <View style={{height: '57.5%', backgroundColor: '#83B29F', borderRadius: 15}}>
+      <Animated.View style={{height: coverHeight, width: coverWidth, alignSelf: 'center', backgroundColor: '#83B29F', borderRadius: 15}}>
 
-      </View>
+      </Animated.View>
     )
   }
 
   const Controls = () => {
       return (
-        <View>
-          <Text style={{alignSelf: 'center', }}>Now Playing</Text>
-          <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>Artist</Text>
-            <Slider
-            style={{width: '100%', }}
-            minimumValue={0}
-            maximumValue={100}
-            thumbTintColor='#FFFFFF'
-            minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="#7D7D7D"
+        <View style={{ width: isMinimized ? '80%' : '100%',  }}>
+              <View style={{marginLeft: '4%',}}>
+                <Text style={{color: 'white', alignSelf: isMinimized ? 'flex-start' : 'center', marginTop: '5%' }}>Now Playing</Text>
+                <Text style={{ color: 'white', fontWeight: 'bold', alignSelf: isMinimized ? 'flex-start' : 'center', marginBottom: '3%', fontWeight: 'bold' }}>Artist</Text>                
+              </View>
+            <MultiSlider
+            containerStyle={{ alignSelf: 'center', }}
+            trackStyle={{backgroundColor: '#7D7D7D', height: 5, borderRadius: 5, }}
+            markerStyle={{ backgroundColor: 'white', alignSelf: 'center'}}
+            markerContainerStyle={{justifyContent: 'center'}}
+            sliderLength={Width*.75}
+            showStepMarkers={false}
+            touchDimensions={{
+                  height: 500,
+                  width: 100,
+                  borderRadius: 100,
+                  slipDisplacement: 500
+              }}
+            markerSize={10}
+            // minimumValue={0}
+            // maximumValue={100}
+            // thumbTintColor='#FFFFFF'
+            // minimumTrackTintColor="#FFFFFF"
+            // maximumTrackTintColor="#7D7D7D"
+            // thumbImage={thumbIcon}
             />
-
-            {/* <SkipPrevious */}
-            {/* /> */}
-
+            {isMinimized ? <></> : 
+                <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingHorizontal: '10%' }}>
+                <Icon name = 'step-backward' size={30} style={{color: 'white', padding:10}} />                        
+                <Icon name = 'play-circle' size={50} style={{color: 'white', }} />                        
+                <Icon name = 'step-forward' size={30} style={{color: 'white', padding: 10}} />                        
+              </View>}
         </View>
       )
   }
 
-  const Related = () => {
-    return (
-      <View>
+  const Nothing = () => {
+    return;
+  }
 
-      </View>
+  const Related = () => {
+    console.log(SongList.length)
+    return (
+      !isMinimized ?
+        <ScrollView
+        // contentContainerStyle={styles.contentContainer}
+        style={{marginTop: '5%'}}
+        >
+        {
+                SongList.map((data) => {
+                return (<SongListComponent key={data.id} />);
+                })
+        }
+        </ScrollView>
+        :
+        <></>
     )
   }
   return (
 
-    <Animated.View style={[{ height: dynheight, width: '100%', position: 'absolute', backgroundColor: '#3E3E3E', alignSelf: 'flex-end', bottom: 0 }]}>
-        <View style={{height: '95%', width: '95%', backgroundColor: '#3E3E3E', borderRadius: 25, alignSelf: 'center'}}>
-          <Animated.View style={{width: '100%', paddingHorizontal: '10%', flexDirection: isMinimized ? 'row' : 'column'  } }>
+    <Animated.View style={[{ height: dynheight, width: '100%', position: 'absolute', paddingVertical: '2%', backgroundColor: '#3E3E3E', alignSelf: 'flex-end', bottom: 0, borderRadius: 25, }]}>
+        <TouchableOpacity onPress={() => {isMinimized ? changePlayerSize() : Nothing()} } activeOpacity={ isMinimized ? 0.2 : 1}  style={{height: '100%', width: '100%', backgroundColor: '#3E3E3E', borderRadius: 25}}>
+          <Animated.View style={{width: '100%', paddingHorizontal: '5%', flexDirection: isMinimized ? 'row' : 'column',}}>
             <Swipe />
-            <Cover />
+            <Cover />   
             <Controls />
-            <Related />
+            <Related /> 
           </Animated.View>
-
-        </View>
+        </TouchableOpacity>
     </Animated.View>
   )
 }
