@@ -70,30 +70,23 @@ const Player = () => {
       return (
         <View style={{ width: isMinimized ? '80%' : '100%',  }}>
               <View style={{marginLeft: '4%',}}>
-                <Text style={{color: 'white', alignSelf: isMinimized ? 'flex-start' : 'center', marginTop: '5%' }}>Now Playing</Text>
-                <Text style={{ color: 'white', fontWeight: 'bold', alignSelf: isMinimized ? 'flex-start' : 'center', marginBottom: '3%', fontWeight: 'bold' }}>Artist</Text>                
+                <Text style={{color: 'white', alignSelf: isMinimized ? 'flex-start' : 'center',  }}>Now Playing</Text>
+                <Text style={{ color: 'white', fontWeight: 'bold', alignSelf: isMinimized ? 'flex-start' : 'center', fontWeight: 'bold' }}>Artist</Text>                
               </View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            {isMinimized ? <></> : <Text style={{alignSelf: 'center', marginRight: 2}}>00:00</Text>}
             <MultiSlider
             containerStyle={{ alignSelf: 'center', }}
             trackStyle={{backgroundColor: '#7D7D7D', height: 5, borderRadius: 5, }}
-            markerStyle={{ backgroundColor: 'white', alignSelf: 'center'}}
+            markerStyle={{ backgroundColor: 'white', marginTop: 5}}
             markerContainerStyle={{justifyContent: 'center'}}
-            sliderLength={Width*.75}
+            sliderLength={ isMinimized ? Width*.50 : Width*.65}
             showStepMarkers={false}
-            touchDimensions={{
-                  height: 500,
-                  width: 100,
-                  borderRadius: 100,
-                  slipDisplacement: 500
-              }}
+            
             markerSize={10}
-            // minimumValue={0}
-            // maximumValue={100}
-            // thumbTintColor='#FFFFFF'
-            // minimumTrackTintColor="#FFFFFF"
-            // maximumTrackTintColor="#7D7D7D"
-            // thumbImage={thumbIcon}
             />
+            <Text style={{alignSelf: 'center'}}>03:06</Text>
+            </View>
             {isMinimized ? <></> : 
                 <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingHorizontal: '10%' }}>
                 <Icon name = 'step-backward' size={30} style={{color: 'white', padding:10}} />                        
@@ -109,7 +102,6 @@ const Player = () => {
   }
 
   const Related = () => {
-    console.log(SongList.length)
     return (
       !isMinimized ?
         <ScrollView

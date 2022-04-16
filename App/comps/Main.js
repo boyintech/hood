@@ -11,6 +11,7 @@ import {
   View,
   Image
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 const Main =(props) => {
@@ -33,7 +34,15 @@ const Main =(props) => {
         </View>
         <View>
           <Text style={{fontSize: 22, alignSelf: 'center'}}>Enjoy the world of music with HooD</Text>
-            <TouchableOpacity onPress={() => props.navigation.navigate("Login")} style={{justifyContent: 'center',backgroundColor: '#FFF', marginTop: 30, width: '70%', height: '22.5%', alignSelf: 'center', borderRadius: 7, shadowOffset: {
+            <TouchableOpacity onPress={() => props.navigation.navigate("Login")} style={{justifyContent: 'center',
+            backgroundColor: '#FFF', 
+            marginTop: 30, 
+            width: '70%', 
+            height: '22.5%', 
+            alignSelf: 'center', 
+            borderRadius: 7, 
+            flexDirection: 'row',
+            shadowOffset: {
                     width: 0,
                     height: 2,
                 },
@@ -41,6 +50,7 @@ const Main =(props) => {
                 shadowRadius: 3.84,
 
                 elevation: 5,}}>
+                <Icon name='ios-musical-notes-sharp' size={30} color='#000' style={{alignSelf: 'center'}} />
                 <Text style={{alignSelf: 'center', fontSize: 24, fontWeight: 'bold', color: '#000000'}}>Lets Start</Text>
             </TouchableOpacity>
         </View>

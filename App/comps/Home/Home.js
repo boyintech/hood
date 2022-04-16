@@ -4,6 +4,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Player from '../Player/Player';
 import SongList from './SongList.json';
 import SongListComponent from '../Player/SongListComponent.js';
+import Icon from 'react-native-vector-icons/AntDesign';
+
+
 
 const Header = () => {
     return (
@@ -15,9 +18,10 @@ const Header = () => {
         <View style={{height: 50, width: 50, justifyContent: 'center', backgroundColor: '#83B29F', borderRadius: 100, alignSelf: 'center', }}>
             <Text style={{fontSize: 24, alignSelf: 'center'}}>B</Text>
         </View>    
-        <View style={{height: 50, width: 50, borderRadius: 100, alignSelf: 'center', }}>
-            <Image
-             source = {require('../../assets/settings.png')}
+        <View style={{height: 50, width: 50, borderRadius: 100, alignSelf: 'center', justifyContent: 'center' }}>
+            <Icon
+             name = 'setting'
+             size={45}
              />
         </View>
         </View>
