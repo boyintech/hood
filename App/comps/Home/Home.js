@@ -1,12 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TextInput, Image, ScrollView} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Player from '../Player/Player';
-import SongList from './SongList.json';
+import SongsList from './SongsList.js';
 import SongListComponent from '../Player/SongListComponent.js';
 import Icon from 'react-native-vector-icons/AntDesign';
+import TrackPlayer from 'react-native-track-player';
+import GlobalBackground from '../GlobalBackground.js';
+import {useSelector} from 'react-redux';
 
-
+// var track = {
+//     url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Load media from the network
+//     title: 'Avaritia',
+//     artist: 'deadmau5',
+//     album: 'while(1<2)',
+//     genre: 'Progressive House, Electro House',
+//     date: '2014-05-20T07:00:00+00:00', // RFC 3339
+//     artwork: 'http://example.com/cover.png', // Load artwork from the network
+//     duration: 402 // Duration in seconds
+// };
+// 
+// await TrackPlayer.add([track1]);
+// // TrackPlayer.play();
+// TrackPlayer.pause();
+// 
+// 
+// // await TrackPlayer.setupPlayer({})
 
 const Header = () => {
     return (
@@ -41,30 +60,24 @@ const Header = () => {
         );
 }
 
-const Home = (props) => { 
+const Home = (props) => {
+    const SongList = SongsList();
     return (
     <View style={{height:'100%', width: '100%' ,alignContent: "center",}}>
-        <Image 
-        style = {{height: '100%', width: '100%', position: 'absolute'}}
-        resizeMethod = 'resize'
-        resizeMode = 'stretch'
-        source = {require('../../assets/Vinyl.png')}
-        />
+    <GlobalBackground type={'image'} />
     <View style={{height: '15%', flexDirection: 'column', }}>
     <Header />
     </View>
-    <View  style={{}}>
         <ScrollView
         // contentContainerStyle={styles.contentContainer}
         style={{}}
         >
         {
                 SongList.map((data) => {
-                return (<SongListComponent key={data.id} />);
+                return (<SongListComponent songData = {data} key={data.id} />);
                 })
         }
         </ScrollView>
-    </View>
     <Player />
     </View>
     );

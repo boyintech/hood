@@ -1,18 +1,13 @@
 import {View, Text, TextInput, Image, StyleSheet} from 'react-native';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import GlobalBackground from '../GlobalBackground.js';
 
 const Login = (props) => {
     return (
     <View style={{height:'100%', width: '100%', alignContent: "center",}}>
-    <Image 
-    style = {{height: '100%', width: '100%', position: 'absolute'}}
-    resizeMethod = 'resize'
-    resizeMode = 'stretch'
-    source = {require('../../assets/Vinyl.png')}
-    />
+    <GlobalBackground type={'image'} />
     <View style={{height: '50%', width: '100%'}}>
-  
 
     <Image 
     style = {{height: '100%', width: '98%', position: 'absolute'}}

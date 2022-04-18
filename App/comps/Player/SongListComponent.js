@@ -4,11 +4,12 @@ import {
 } from 'react-native';
 
 const SongListComponent = (props) => {
+    console.log(props);
       return (
             <View
-            style={{height: '8%', width: '100%', flexDirection: 'row',}}>
+            style={{ width: '100%', flexDirection: 'row',}}>
                 <View
-                style={{height: '80%', width: '15%', backgroundColor: '#83B29F', borderRadius: 10, marginLeft: '5%'}}>
+                style={{height: '100%', width: '15%', backgroundColor: '#83B29F', borderRadius: 10, marginLeft: '5%'}}>
                     
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '70%', }}>

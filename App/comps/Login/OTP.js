@@ -1,16 +1,12 @@
 import React from 'react';
 import {View, Text, TextInput, Image} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import GlobalBackground from '../GlobalBackground.js';
 
 const OTP = (props) => {
     return (
     <View style={{height:'100%', width: '100%',alignContent: "center",}}>
-        <Image 
-        style = {{height: '100%', width: '100%', position: 'absolute'}}
-        resizeMethod = 'resize'
-        resizeMode = 'stretch'
-        source = {require('../../assets/Vinyl.png')}
-        />
+    <GlobalBackground type={'image'} />
         <View style={{width: '100%', height: '30%', marginBottom: '5%'}}> 
         <Text style={{fontSize: 30, margin:35, color: 'white'}}>OTP</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-around', marginHorizontal: '5%'}}>
