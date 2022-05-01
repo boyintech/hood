@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 
 const SongListComponent = (props) => {
-    console.log(props);
       return (
             <View
             style={{ width: '100%', flexDirection: 'row',}}>
@@ -14,7 +13,7 @@ const SongListComponent = (props) => {
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '70%', }}>
                 <View style={{ marginLeft: '4%' }}>
-                    <Text style={{color: '#FFF', fontWeight: '500'}}>Song Name</Text>
+                    <Text style={{color: '#FFF', fontWeight: '500'}}>{props.songData.name}</Text>
                     <Text style={{color: '#FFF', fontWeight: '500', marginTop: 3}}>03 : 10</Text>
                 </View>
                 <View style={{ flexDirection: 'row', }}>

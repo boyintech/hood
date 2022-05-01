@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react'
 import {View, Text, Animated, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 // import Slider from '@react-native-community/slider';
 import SongListComponent from './SongListComponent.js';
-import SongList from '../Home/SongList.json';
+import SongsList from '../Home/SongsList.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
@@ -102,6 +102,7 @@ const Player = () => {
   }
 
   const Related = () => {
+    const SongList = SongsList();
     return (
       !isMinimized ?
         <ScrollView
@@ -109,8 +110,8 @@ const Player = () => {
         style={{marginTop: '5%'}}
         >
         {
-                SongList.map((data) => {
-                return (<SongListComponent key={data.id} />);
+                SongList.map((songs) => {
+                return (songs.data.map((song) => <SongListComponent songData = {song} key={song.id} />));
                 })
         }
         </ScrollView>
@@ -119,7 +120,6 @@ const Player = () => {
     )
   }
   return (
-
     <Animated.View style={[{ height: dynheight, width: '100%', position: 'absolute', paddingVertical: '2%', backgroundColor: '#3E3E3E', alignSelf: 'flex-end', bottom: 0, borderRadius: 25, }]}>
         <TouchableOpacity onPress={() => {isMinimized ? changePlayerSize() : Nothing()} } activeOpacity={ isMinimized ? 0.2 : 1}  style={{height: '100%', width: '100%', backgroundColor: '#3E3E3E', borderRadius: 25}}>
           <Animated.View style={{width: '100%', paddingHorizontal: '5%', flexDirection: isMinimized ? 'row' : 'column',}}>

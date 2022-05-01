@@ -73,8 +73,8 @@ const Home = (props) => {
         style={{}}
         >
         {
-                SongList.map((data) => {
-                return (<SongListComponent songData = {data} key={data.id} />);
+                SongList.map((songs) => {
+                return (songs.data.map((song) => <SongListComponent songData = {song} key={song.id} />));
                 })
         }
         </ScrollView>
