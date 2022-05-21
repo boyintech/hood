@@ -6,7 +6,7 @@ import {
 const SongListComponent = (props) => {
       return (
             <View
-            style={{ width: '100%', flexDirection: 'row',}}>
+            style={{ width: '100%', flexDirection: 'row', marginVertical: 10, height: '16%',}}>
                 <View
                 style={{height: '100%', width: '15%', backgroundColor: '#83B29F', borderRadius: 10, marginLeft: '5%'}}>
                     

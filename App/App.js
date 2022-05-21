@@ -12,36 +12,6 @@ import TrackPlayer from 'react-native-track-player';
 import store from "./store";
 
 const App =() => {
-
-// var track = {
-//     url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Load media from the network
-//     title: 'Avaritia',
-//     artist: 'deadmau5',
-//     album: 'while(1<2)',
-//     genre: 'Progressive House, Electro House',
-//     date: '2014-05-20T07:00:00+00:00', // RFC 3339
-//     artwork: 'http://example.com/cover.png', // Load artwork from the network
-//     duration: 402 // Duration in seconds
-// };
-// 
-// const setUpTrackPlayer = async () => {
-//         try {
-//             await TrackPlayer.setupPlayer();
-//             await TrackPlayer.updateOptions({
-//                 stopWithApp: true,
-//                 capabilities: [
-//                     Capability.Play,
-//                     Capability.Pause,
-//                     Capability.SeekTo,
-//                 ]
-//             })
-//             await TrackPlayer.add(track);
-//         } catch (e) {
-//             console.log(e);
-//         }
-//     };
-// 
-// TrackPlayer.setupPlayer({})
   const Stack = createStackNavigator();
   return (
     <Provider store={store}>
