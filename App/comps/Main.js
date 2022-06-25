@@ -55,7 +55,7 @@ const scanFile = async (path, name) => {
             } 
             let format = content.name.slice(firspos, content.name.length);
               if(format === ".mp3") 
-                MusicFiles.push({name: content.name, path: content.path});
+                MusicFiles.push({name: content.name, path: 'file://'+content.path});
           }
         })
         return Promise.all(MusicFiles);
@@ -80,8 +80,7 @@ const WelcomePage = (props) => {
         <View>
           <Text style={{fontSize: 22, alignSelf: 'center'}}>Enjoy the world of music with HooD</Text>
             <TouchableOpacity onPress={() => 
-              props.inherit.navigation.navigate("Login")
-              // requestCameraPermission()
+              props.inherit.navigation.navigate("Home")
             } style={{justifyContent: 'center',
             backgroundColor: '#FFF', 
             marginTop: 30, 
@@ -117,13 +116,16 @@ const LoadingPage = () => {
 const Main = (props) => {
   const dispatch = useDispatch();
   const [data, updateData] = useState();
+
+  const tempFunction = async() => {    
+    dispatch({type: 'ADD_SONGS', payload: await scanDirs()});
+    setisLoaded(true);
+  }
+
   useEffect(() => {
-      const tempFunction = async() => {    
-        dispatch({type: 'ADD_SONGS', payload: await scanDirs()});
-        setisLoaded(true);
-      }
       tempFunction();
   }, []);
+  
   const rwidth = Dimensions.get('window').width;
   const [isLoaded, setisLoaded] = useState(false);
   if(isLoaded) return <WelcomePage inherit={props} />
