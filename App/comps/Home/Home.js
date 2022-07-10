@@ -49,15 +49,15 @@ const Home = (props) => {
 
     const addTracks = async () => {
         let track = []
-        let id = 0;
+        // let id = 0;
         SongList.map(async (content, i) => {
             await content.data.map((data, i) => {
                 track.push({
-                    id: ''+id,
+                    id: data.id,
                     url: data.path,
                     title: data.name
                 })
-                id++;
+                // id++;
             })
         });
         return Promise.all(track);
@@ -78,7 +78,7 @@ const Home = (props) => {
         { !tracksLoaded ? <ActivityIndicator /> :
                 tracks.map((song) => {
                     return(
-                    <TouchableOpacity 
+                    <TouchableOpacity key = {song.key}
                     onPress={() => props.navigation.navigate("Player", {song: song})}
                     >
                     <SongListComponent song = {song} key = {song.key} />

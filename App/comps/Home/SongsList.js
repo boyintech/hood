@@ -11,4 +11,17 @@ const SongsList = () => {
     return SongList;
 }     
 
+export const searchByID = (id) => {
+    const tracks = SongsList();
+    let trackDetail = {};
+    tracks.map((Dirs) => {
+        // console.log(Dirs.data);
+                    Dirs.data.map((track) => {
+                if(track.id === id) 
+                    trackDetail = track;
+            });
+    })
+    return trackDetail;
+}
+
 export default SongsList;

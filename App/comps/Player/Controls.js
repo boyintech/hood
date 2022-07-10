@@ -1,49 +1,43 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import {useDispatch} from 'react-redux';
-import { Play } from '../../store/actions/PlayerActions';
+import {useDispatch, useSelector} from 'react-redux';
+import playerActions from '../../store/actions/playerActions'
 import TrackPlayer, {State} from 'react-native-track-player';
+import PlayerState from '../../store/reducers/PlayerState';
+import { searchByID } from '../Home/SongsList.js';
+import store from '../../store/';
+
 
 let Height = Dimensions.get('window').height;
 let Width = Dimensions.get('window').width;
 
 const Controls = (song) => {
 
+  const Play = playerActions().Play;
+  const Pause = playerActions().Pause;
+  const Prev = playerActions().Prev;
+  const Next = playerActions().Next;
+  const Reset = playerActions().Reset;
+
+  console.log(song.songData.id);
+  let currentTrack = searchByID(song.songData.id);
+
   const dispatch = useDispatch();
+  
+  const [PlayerState, updatePlayerState] = useState(store.getState().PlayerState);
 
-  const Play = async () => {
-    TrackPlayer.play();
-    dispatch({type: 'PLAY', payload: {state: 'play'}});
-  }
-
- const Pause = async () => {
-    dispatch({type: 'PAUSE', payload: {state: 'pause'}});
-    TrackPlayer.pause();
-  }
-
- const Stop = async () => {
-    dispatch({type: 'STOP', payload: {state: 'stop'}});
-    TrackPlayer.stop();
-  }
- const Prev = () => {
-    dispatch({type: 'PREV', payload: {state: 'prev'}});
-    TrackPlayer.skipToPrevious();
-  }
- const Next = () => {
-      dispatch({type: 'NEXT', payload: {state: 'next'}});
-      TrackPlayer.skipToNext();
-  }
- const Reset = async () => {
-    TrackPlayer.reset();
-  }
+  useEffect(() => {
+    // updatePlayerState(store.getState().PlayerState);
+  },
+  [])
 
   return (
     <View style={{ width: '100%',  }}>
           <View style={{marginLeft: '4%',}}>
-            <Text style={{color: 'white', alignSelf: 'center',  }}>{song.songData.title}</Text>
-            <Text style={{ color: 'white', fontWeight: 'bold', alignSelf: 'center', fontWeight: 'bold' }}>Artist</Text>                
+            <Text style={{color: 'white', alignSelf: 'center',  }}>c</Text>
+            {/* <Text style={{ color: 'white', fontWeight: 'bold', alignSelf: 'center', fontWeight: 'bold' }}>Artist</Text>                 */}
           </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
        <Text style={{alignSelf: 'center', marginRight: 2}}>00:00</Text>
@@ -60,12 +54,14 @@ const Controls = (song) => {
         <Text style={{alignSelf: 'center'}}>03:06</Text>
         </View> 
             <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingHorizontal: '10%' }}>
-            <Icon name = 'step-backward' size={30} style={{color: 'white', padding:10}} />                        
-            <Icon
-            onPress={() => Play()}
-            name = 'play-circle' size={50} style={{color: 'white', }} />                        
             <Icon 
             onPress={() => Pause()}
+            name = 'step-backward' size={30} style={{color: 'white', padding:10}} />                        
+            <Icon
+            onPress={() =>  Play()}
+            name = {PlayerState.state === 'pause' ? 'play' : 'pause'} size={35} style={{color: 'white', }} />                        
+            <Icon 
+            onPress={() => Next()}
             name = 'step-forward' size={30} style={{color: 'white', padding: 10}} />                        
           </View>
     </View>

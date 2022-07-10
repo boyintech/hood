@@ -18,6 +18,7 @@ import GlobalBackground from './GlobalBackground.js';
 import {connect, useSelector, useDispatch} from 'react-redux';
 import RNFS from 'react-native-fs';
 
+let noOfSongs = 0;
 
 const scanDirs = async () => {
   let MusicData = 
@@ -54,8 +55,10 @@ const scanFile = async (path, name) => {
                 }
             } 
             let format = content.name.slice(firspos, content.name.length);
-              if(format === ".mp3") 
-                MusicFiles.push({name: content.name, path: 'file://'+content.path});
+              if(format === ".mp3") {
+                MusicFiles.push({name: content.name, path: 'file://'+content.path, id: ''+noOfSongs});
+                noOfSongs++;
+              }
           }
         })
         return Promise.all(MusicFiles);
@@ -117,13 +120,13 @@ const Main = (props) => {
   const dispatch = useDispatch();
   const [data, updateData] = useState();
 
-  const tempFunction = async() => {    
-    dispatch({type: 'ADD_SONGS', payload: await scanDirs()});
+  const addSongs = async() => {    
+    dispatch({type: 'ADD_SONGS', payload: await scanDirs()}); 
     setisLoaded(true);
   }
 
   useEffect(() => {
-      tempFunction();
+      addSongs();
   }, []);
   
   const rwidth = Dimensions.get('window').width;

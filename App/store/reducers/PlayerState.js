@@ -1,32 +1,27 @@
-import TrackPlayer from "react-native-track-player"
-
 const initialState = {
-    state: '',
-    songTitle: '',
-    songIndex: '',
+    state: 'pause',
+    name: '',
+    id: '',
+    path: '',
     duration: '',
 }
 
 function PlayerState (state = initialState, action) {
   switch(action.type){
+    case 'START':
+      return action.payload
     case 'PLAY':
-      console.log(action.type, action.payload);
-      return {...state, initialState: action.payload}
+      return action.payload
     case 'PAUSE':
-       console.log(action.type, action.payload);
-      return {...state, initialState: action.payload}
-    case 'STOP':
-      console.log(action.type, action.payload);   
-      return {...state, initialState: action.payload}
+      return action.payload
+    case 'STOP':   
+      return action.payload
     case 'PREV':
-        console.log(action.type, action.payload);   
-        return {...state, initialState: action.payload}
+        return action.payload
     case 'NEXT':
-        console.log(action.type, action.payload);   
-        return {...state, initialState: action.payload}
+        return action.payload
     case 'SEEKTO':
-        console.log(action.type, action.payload);   
-        return {...state, initialState: action.payload}
+        return action.payload
     default: 
      return state;
   }
