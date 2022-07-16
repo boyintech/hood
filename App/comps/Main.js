@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import getMp3Duration from 'react-native-get-mp3-duration';
 import {
   SafeAreaView,
   ScrollView,

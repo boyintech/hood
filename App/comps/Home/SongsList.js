@@ -20,7 +20,7 @@ export const searchByID = (id) => {
                 if(track.id === id) 
                     trackDetail = track;
             });
-    })
+    });
     return trackDetail;
 }
 

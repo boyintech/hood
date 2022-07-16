@@ -1,34 +1,59 @@
 import { useDispatch } from "react-redux";
 import TrackPlayer, {State} from 'react-native-track-player';
+import { searchByID } from "../../comps/Home/SongsList";
+import SongsList from "../../comps/Home/SongsList";
 
 export default function playerActions(){
 
   const dispatch = useDispatch();
 
-  const Play = (track) => {
-    // TrackPlayer.play();
-    dispatch({type: 'PLAY', payload: {track, state: 'play'}});
+  const Play = async (track) => {
+    let trackIndex = await TrackPlayer.getCurrentTrack();
+    let trackObject = await TrackPlayer.getTrack(trackIndex);
+    dispatch({type: 'PLAY', payload: {state: 'play', ...trackObject}});
+    TrackPlayer.play();
   }
 
- const Pause = async (track) => {
-    dispatch({type: 'PAUSE', payload: {track, state: 'pause'}});
-    // TrackPlayer.pause();
+ const Pause = async () => {
+    let trackIndex = await TrackPlayer.getCurrentTrack();
+    let trackObject = await TrackPlayer.getTrack(trackIndex);
+    dispatch({type: 'PAUSE', payload: {state: 'pause', ...trackObject}});
+    TrackPlayer.pause();
   }
+
  const Stop = async (track) => {
     dispatch({type: 'STOP', payload: {track, state: 'pause'}});
-    // TrackPlayer.stop();
-  }
- const Prev = (track) => {
-    dispatch({type: 'PREV', payload: {track, state: 'play'}});
-    // TrackPlayer.skipToPrevious();
+    TrackPlayer.stop();
   }
 
- const Next = (track) => {
-      dispatch({type: 'NEXT', payload: {track, state: 'play'}});
-      // TrackPlayer.skipToNext();
+
+ const Prev = async() => {
+  try{
+    TrackPlayer.skipToPrevious();
+    let trackIndex = await TrackPlayer.getCurrentTrack();
+    let trackObject = await TrackPlayer.getTrack(trackIndex);
+    dispatch({type: 'PREV', payload: {state: 'play', ...trackObject}});
+    TrackPlayer.play();
+  }catch(e){
+    console.log(e, "First Song");
+    }
   }
+
+ const Next = async () => {
+  try{
+    TrackPlayer.skipToNext();
+    let trackIndex = await TrackPlayer.getCurrentTrack();
+    let trackObject = await TrackPlayer.getTrack(trackIndex);
+
+    dispatch({type: 'NEXT', payload: {state: 'play', ...trackObject}});
+    TrackPlayer.play();
+   } catch(e) {
+    console.log(e, "Last Song")
+   }
+  }
+
  const Reset = async (track) => {
-    // TrackPlayer.reset();
+    TrackPlayer.reset();
   }
 
   return { Play, Pause, Stop, Prev, Next, Reset };

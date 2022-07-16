@@ -5,9 +5,11 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import TrackPlayer, {State} from 'react-native-track-player';
 import { useDispatch, useSelector } from 'react-redux';
 import store from '../../store/';
-
+import RNFS, {stat} from 'react-native-fs';
+import { useProgress } from 'react-native-track-player';
 import playerActions from '../../store/actions/playerActions'
 import {searchByID} from '../Home/SongsList.js';
+import getMp3Duration from 'react-native-get-mp3-duration';
 
 
 // import Controls from './Controls.js';
@@ -26,11 +28,6 @@ import {searchByID} from '../Home/SongsList.js';
   }
 
 
-  const movetoIndex = async (trackIndex) => {
-   await TrackPlayer.skip( parseFloat(trackIndex) );
-  }
-
-
 const Player = (songData) => {
 
   const Play = playerActions().Play;
@@ -41,50 +38,72 @@ const Player = (songData) => {
   let currentTrack = searchByID(songData.route.params.song.id);
   const dispatch = useDispatch();
   const [PlayerState, updatePlayerState] = useState(store.getState().PlayerState);
-  const [isPlaying, setisPlaying] = useState(PlayerState.state === 'play' ? true : false)
+  const [isPlaying, setisPlaying] = useState(PlayerState.state === 'play' ? true : false);
+  const [duration, setDuration] = useState(0);
+  const [position, setPosition] = useState(0);
+  const [secLeft, setsecLeft] = useState(0);
+  const progress = useProgress();
+
+  const movetoIndex = async (trackIndex) => {
+    try{
+      await TrackPlayer.skip( parseFloat(trackIndex) ).
+      then(() => {
+        Play().then(() => updatePlayerState(store.getState().PlayerState) )
+      })
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
   console.log(PlayerState);
 
   const Controls = (song = songData.route.params.song) => { 
     return (
       <View style={{ width: '100%',  }}>
             <View style={{marginLeft: '4%',}}>
-              <Text style={{color: 'white', alignSelf: 'center',  }}>c</Text>
+              <Text style={{color: 'white', alignSelf: 'center',  }}>{PlayerState.title}</Text>
               {/* <Text style={{ color: 'white', fontWeight: 'bold', alignSelf: 'center', fontWeight: 'bold' }}>Artist</Text>                 */}
             </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-         <Text style={{alignSelf: 'center', marginRight: 2}}>00:00</Text>
+         <Text style={{alignSelf: 'center', marginRight: 2}}>{Math.floor(progress.position / 60)}:{(progress.position%60).toFixed(0)}</Text>
           <MultiSlider
           containerStyle={{ alignSelf: 'center', }}
           trackStyle={{backgroundColor: '#7D7D7D', height: 5, borderRadius: 5, }}
           markerStyle={{ backgroundColor: 'white', marginTop: 5}}
           markerContainerStyle={{justifyContent: 'center'}}
-          sliderLength={ Width*.65 }
+          // sliderLength={ 250 }
           showStepMarkers={false}
-          
-          markerSize={10}
+          max={duration == 0 ? 100: progress.duration}
+          onValuesChangeFinish={(val) => {
+              TrackPlayer.seekTo(val[0]);
+          }}
+          step={1}
+          values={[progress.position]}
+          markerSize={20}
           />
-          <Text style={{alignSelf: 'center'}}>03:06</Text>
+          <Text style={{alignSelf: 'center'}}>{Math.floor(progress.duration / 60)}:{ (progress.duration%60).toFixed(0) }</Text>
           </View> 
               <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingHorizontal: '10%' }}>
               <Icon 
-              onPress={() => {Pause(currentTrack); updatePlayerState(store.getState().PlayerState) }}
+              onPress={() => {
+                Prev().then(() => updatePlayerState(store.getState().PlayerState))
+              }}
               name = 'step-backward' size={30} style={{color: 'white', padding:10}} />                        
               <Icon
               onPress={ () =>  {
                 if(PlayerState.state === 'pause'){
-                  Play(currentTrack); 
-                  updatePlayerState(store.getState().PlayerState);
+                  Play().then(() => updatePlayerState(store.getState().PlayerState)) 
+
                   setisPlaying(false);
                 }
                 else {
-                  Pause(currentTrack); 
-                  updatePlayerState(store.getState().PlayerState);
+                  Pause().then(() => updatePlayerState(store.getState().PlayerState)) 
                   setisPlaying(false);
                 }
                }}
               name = {PlayerState.state === 'play' ? 'pause' : 'play'} size={35} style={{color: 'white', }} />                        
               <Icon 
-              onPress={() => Next()}
+              onPress={() => Next().then(() => updatePlayerState(store.getState().PlayerState))}
               name = 'step-forward' size={30} style={{color: 'white', padding: 10}} />                        
             </View>
       </View>
@@ -93,7 +112,32 @@ const Player = (songData) => {
 
   useEffect(() => {
     movetoIndex(songData.route.params.song.id);
+    // const interval = setInterval(() =>{
+    //   getDuration().then((res) => {
+    //     setDuration(res.duration);
+    //     setPosition(res.position);
+    //   });
+    // }, 1000)
+    // return () => clearInterval(interval)
   }, []);
+
+  const getDuration = async () => {
+    const position = await TrackPlayer.getPosition();
+    const duration = await TrackPlayer.getDuration();
+    try {
+      let trackIndex = await TrackPlayer.getCurrentTrack();
+      let trackObject = await TrackPlayer.getTrack(trackIndex);
+      // console.log(`Title: ${trackObject.title}`);
+      const statRes = await stat(songData.route.params.song.url)
+      // console.log(`${duration - position} seconds left.`);
+      // console.log(duration, position);
+    } catch(e) {
+      console.log(e);
+    }
+    return {position, duration};
+  }
+
+
 
   return (
       <View style={[{ height: '100%', width: '100%', paddingVertical: '2%', backgroundColor: '#3E3E3E', alignSelf: 'flex-end', bottom: 0,}]}>

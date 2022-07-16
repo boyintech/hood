@@ -78,7 +78,9 @@ const Home = (props) => {
         { !tracksLoaded ? <ActivityIndicator /> :
                 tracks.map((song) => {
                     return(
-                    <TouchableOpacity key = {song.key}
+                    <TouchableOpacity 
+                    
+                    key = {song.key}
                     onPress={() => props.navigation.navigate("Player", {song: song})}
                     >
                     <SongListComponent song = {song} key = {song.key} />
