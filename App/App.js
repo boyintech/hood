@@ -6,7 +6,7 @@ import Login from "./comps/Login/Login.js";
 import OTP from "./comps/Login/OTP.js";
 import { NavigationContainer } from '@react-navigation/native';
 import Home from "./comps/Home/Home";
-import TrackPlayer from "react-native-track-player";
+import TrackPlayer, {Capability} from "react-native-track-player";
 import Player from './comps/Player/Player.js';
 
 import store from "./store";
@@ -41,6 +41,28 @@ const setupTrackPlayer = async () => {
       //     ],
       // });
       await TrackPlayer.setupPlayer().then(() => console.log("Player setup Done"));
+      await TrackPlayer.updateOptions({
+        stopWithApp: true, 
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+          Capability.Stop,
+        ],
+        // compactCapabilities: [
+        //   Capability.Play,
+        //   Capability.Pause,
+        //   Capability.SkipToNext,
+        //   Capability.SkipToPrevious,
+        // ],
+        notificationCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+        ],
+      });
   } catch(e) {
       console.log(e)
   }

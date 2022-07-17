@@ -56,7 +56,7 @@ const scanFile = async (path, name) => {
                 }
             } 
             let format = content.name.slice(firspos, content.name.length);
-              if(format === ".mp3") {
+              if(format === ".mp3" && content.size > 1024*1024) {
                 MusicFiles.push({name: content.name, path: 'file://'+content.path, id: ''+noOfSongs});
                 noOfSongs++;
               }

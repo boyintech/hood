@@ -6,7 +6,7 @@ import SongsList from './SongsList.js';
 import SongListComponent from '../Player/SongListComponent.js';
 import Header from '../Header';
 import Icon from 'react-native-vector-icons/AntDesign';
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer, { Capability } from 'react-native-track-player';
 import GlobalBackground from '../GlobalBackground.js';
 import { useDispatch } from 'react-redux';
 import { CatchingPokemonSharp } from '@mui/icons-material';
