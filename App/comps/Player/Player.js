@@ -5,11 +5,9 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import TrackPlayer, {State} from 'react-native-track-player';
 import { useDispatch, useSelector } from 'react-redux';
 import store from '../../store/';
-import RNFS, {stat} from 'react-native-fs';
 import { useProgress } from 'react-native-track-player';
 import playerActions from '../../store/actions/playerActions'
 import {searchByID} from '../Home/SongsList.js';
-import getMp3Duration from 'react-native-get-mp3-duration';
 
 
 // import Controls from './Controls.js';
@@ -21,8 +19,7 @@ import getMp3Duration from 'react-native-get-mp3-duration';
 
   const Cover = () => {
     return (
-      <View style={{height: Height*.4, width: Width*.75, alignSelf: 'center', backgroundColor: '#83B29F', borderRadius: 15}}>
-
+      <View style={{height: Height*.3, width: Width*.60, alignSelf: 'center', backgroundColor: '#83B29F', borderRadius: 15, marginVertical: '5%' }}>
       </View>
     )
   }
@@ -89,6 +86,7 @@ const Player = (songData) => {
                 Prev().then(() => updatePlayerState(store.getState().PlayerState))
               }}
               name = 'step-backward' size={30} style={{color: 'white', padding:10}} />                        
+              <View style= {{backgroundColor: 'white', justifyContent: 'center', borderRadius: 100, width: 50, height: 50, flexDirection: 'row', alignItems: 'center'}}>
               <Icon
               onPress={ () =>  {
                 if(PlayerState.state === 'pause'){
@@ -101,7 +99,8 @@ const Player = (songData) => {
                   setisPlaying(false);
                 }
                }}
-              name = {PlayerState.state === 'play' ? 'pause' : 'play'} size={35} style={{color: 'white', }} />                        
+              name = {PlayerState.state === 'play' ? 'pause' : 'play'} size={32} style={{color: '#3E3E3E', marginLeft: 6, }} />
+              </View>                        
               <Icon 
               onPress={() => Next().then(() => updatePlayerState(store.getState().PlayerState))}
               name = 'step-forward' size={30} style={{color: 'white', padding: 10}} />                        
@@ -111,7 +110,7 @@ const Player = (songData) => {
   }
 
   useEffect(() => {
-    movetoIndex(songData.route.params.song.id);
+    // movetoIndex(songData.route.params.song.id);
     // const interval = setInterval(() =>{
     //   getDuration().then((res) => {
     //     setDuration(res.duration);
@@ -146,7 +145,8 @@ const Player = (songData) => {
           // activeOpacity={ isMinimized ? 0.2 : 1} 
           style={{height: '100%', width: '100%', backgroundColor: '#3E3E3E', borderRadius: 25, }}>
             <View style={{width: '100%',
-                         paddingHorizontal: '5%', 
+                         paddingHorizontal: '5%',
+                         
                         //  flexDirection: isMinimized ? 'row' : 'column',
                          }}>
 

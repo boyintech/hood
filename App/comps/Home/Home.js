@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, Image, ScrollView, ActivityIndicator} from 'react-native';
+import {View, Text, TextInput, Image, ScrollView, Dimensions, ActivityIndicator} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Player from '../Player/Player';
 import SongsList from './SongsList.js';
@@ -10,6 +10,8 @@ import TrackPlayer, { Capability } from 'react-native-track-player';
 import GlobalBackground from '../GlobalBackground.js';
 import { useDispatch } from 'react-redux';
 import { CatchingPokemonSharp } from '@mui/icons-material';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+
 
 // TrackPlayer.updateOptions({
 //     stopWithApp: false,
@@ -19,6 +21,9 @@ import { CatchingPokemonSharp } from '@mui/icons-material';
 //         TrackPlayer.CAPABILTY_PAUSE
 //     ]
 // });
+
+let Height = Dimensions.get('window').height;
+let Width = Dimensions.get('window').width;
 
 const Home = (props) => {
 
@@ -63,6 +68,39 @@ const Home = (props) => {
         return Promise.all(track);
     }
 
+    const Controls = (song = songData.route.params.song) => { 
+        return (
+            <View style={{  }}>
+                <MultiSlider
+                containerStyle={{ marginTop: -23, position: 'absolute' }}
+                trackStyle={{backgroundColor: '#7D7D7D', height: 5, borderRadius: 5, }}
+                markerStyle={{ backgroundColor: 'white', marginTop: 5, marginLeft: 12 }}
+                markerContainerStyle={{justifyContent: 'center'}}
+                sliderLength={ 410 }
+                showStepMarkers={false}
+                //   max={duration == 0 ? 100: progress.duration}
+                onValuesChangeFinish={(val) => {
+                  TrackPlayer.seekTo(val[0]);
+                }}
+                step={1}
+                //   values={[progress.position]}
+                markerSize={30}
+                />
+                <View style={{flexDirection: 'row'}}>  
+                <View style={{height: '70%', width: '18%', backgroundColor: '#83B29F', borderRadius: 10, margin: '4%',}}>
+
+                </View>
+
+                <View>
+                    <Text style={{color: '#FFF', fontWeight: '500'}}>asd</Text>
+                    <Text style={{color: '#FFF', fontWeight: '500', marginTop: 3}}></Text>
+                </View>
+
+                </View>
+            </View>
+        )
+      }
+
     return (
     <View style={{height:'100%', width: '100%' ,alignContent: "center",}}>
     <GlobalBackground type={'image'} />
@@ -89,40 +127,51 @@ const Home = (props) => {
                 })
         }
         </ScrollView>
-        {/* <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-        <TouchableOpacity 
-        onPress={() => play()}
-        style={{height: '30%', width: 120, backgroundColor: 'black', marginLeft: 10}}>
-            <Text>Play</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-        onPress={() => pause()}
-        style={{height: '30%', width: 120, backgroundColor: 'black', marginLeft: 10}}>
-            <Text>PAUSE</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-        onPress={() => stop()}
-        style={{height: '30%', width: 120, backgroundColor: 'black', marginLeft: 10}}>
-            <Text>Stop</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-        onPress={() => prev()}
-        style={{height: '30%', width: 120, backgroundColor: 'black', marginLeft: 10, marginTop: 10}}>
-            <Text>Prev</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-        onPress={() => next()}
-        style={{height: '30%', width: 120, backgroundColor: 'black', marginLeft: 10, marginTop: 10}}>
-            <Text>Next</Text>
-        </TouchableOpacity>
-        </View> */}
+        
+        <View style={{ width: '100%', height: '12%', backgroundColor: '#3E3E3E'}}>
+          <Controls songData ={{"id": "0", "state": "pause", "title": "Childish Gambino - Redbone (Instrumental).mp3", "url": "file:///storage/emulated/0/Download/Childish Gambino - Redbone (Instrumental).mp3"}} />
+        </View>
 
     </View>
     );
 }
 
 export default Home;
+
+
+
+//  <View style={{ width: '100%',  }}>
+// <View style={{marginLeft: '4%',}}>
+//   <Text style={{color: 'white', alignSelf: 'center',  }}>hello</Text>
+//   {/* <Text style={{ color: 'white', fontWeight: 'bold', alignSelf: 'center', fontWeight: 'bold' }}>Artist</Text>                 */}
+// </View>
+// <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+// {/* <Text style={{alignSelf: 'center', marginRight: 2}}>{Math.floor(progress.position / 60)}:{(progress.position%60).toFixed(0)}</Text> */}
+// {/* <Text style={{alignSelf: 'center'}}>{Math.floor(progress.duration / 60)}:{ (progress.duration%60).toFixed(0) }</Text> */}
+// </View> 
+//   <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingHorizontal: '5%' }}>
+//   <Icon 
+//   onPress={() => {
+//     // Prev().then(() => updatePlayerState(store.getState().PlayerState))
+//   }}
+//   name = 'step-backward' size={30} style={{color: 'white', padding:10}} />                        
+//   {/* <View style= {{backgroundColor: 'white', justifyContent: 'center', borderRadius: 100, width: 32, height: 32, flexDirection: 'row', alignItems: 'center'}}> */}
+//   <Icon
+// //   onPress={ () =>  {
+// //     if(PlayerState.state === 'pause'){
+// //       Play().then(() => updatePlayerState(store.getState().PlayerState)) 
+
+// //       setisPlaying(false);
+// //     }
+// //     else {
+// //       Pause().then(() => updatePlayerState(store.getState().PlayerState)) 
+// //       setisPlaying(false);
+// //     }
+// //    }}
+//   name = 'play' size={35} style={{color: 'white', backgroundColor: '#3E3E3E',borderRadius: 25}} />
+//   {/* </View>                         */}
+//   <Icon 
+// //   onPress={() => Next().then(() => updatePlayerState(store.getState().PlayerState))}
+//   name = 'step-forward' size={30} style={{color: 'white', padding: 10}} />                        
+// </View>
+// </View>
