@@ -5,12 +5,12 @@ import Player from '../Player/Player';
 import SongsList from './SongsList.js';
 import SongListComponent from '../Player/SongListComponent.js';
 import Header from '../Header';
-import Icon from 'react-native-vector-icons/AntDesign';
 import TrackPlayer, { Capability } from 'react-native-track-player';
 import GlobalBackground from '../GlobalBackground.js';
 import { useDispatch } from 'react-redux';
 import { CatchingPokemonSharp } from '@mui/icons-material';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import Controls from '../Player/Controls';
 
 
 // TrackPlayer.updateOptions({
@@ -31,6 +31,7 @@ const Home = (props) => {
     const [tracksLoaded, setTracksLoaded] = useState(false);
     const SongList = SongsList();
     const [tracks, setTracks] = useState([]);
+    const [state, setState] = useState(false);
 
 
     useEffect(() => {
@@ -68,45 +69,14 @@ const Home = (props) => {
         return Promise.all(track);
     }
 
-    const Controls = (song = songData.route.params.song) => { 
-        return (
-            <View style={{  }}>
-                <MultiSlider
-                containerStyle={{ marginTop: -23, position: 'absolute' }}
-                trackStyle={{backgroundColor: '#7D7D7D', height: 5, borderRadius: 5, }}
-                markerStyle={{ backgroundColor: 'white', marginTop: 5, marginLeft: 12 }}
-                markerContainerStyle={{justifyContent: 'center'}}
-                sliderLength={ 410 }
-                showStepMarkers={false}
-                //   max={duration == 0 ? 100: progress.duration}
-                onValuesChangeFinish={(val) => {
-                  TrackPlayer.seekTo(val[0]);
-                }}
-                step={1}
-                //   values={[progress.position]}
-                markerSize={30}
-                />
-                <View style={{flexDirection: 'row'}}>  
-                <View style={{height: '70%', width: '18%', backgroundColor: '#83B29F', borderRadius: 10, margin: '4%',}}>
 
-                </View>
-
-                <View>
-                    <Text style={{color: '#FFF', fontWeight: '500'}}>asd</Text>
-                    <Text style={{color: '#FFF', fontWeight: '500', marginTop: 3}}></Text>
-                </View>
-
-                </View>
-            </View>
-        )
-      }
 
     return (
     <View style={{height:'100%', width: '100%' ,alignContent: "center",}}>
     <GlobalBackground type={'image'} />
-    <View style={{height: '15%', flexDirection: 'column', }}>
-    <Header />
-    </View>
+    {/* <View style={{height: '15%', flexDirection: 'column', }}> */}
+    {/* <Header /> */}
+    {/* </View> */}
     <View>
     </View>
         <ScrollView
@@ -119,18 +89,20 @@ const Home = (props) => {
                     <TouchableOpacity 
                     
                     key = {song.key}
-                    onPress={() => props.navigation.navigate("Player", {song: song})}
+                    onPress={() => {setState(true)}}
                     >
                     <SongListComponent song = {song} key = {song.key} />
                     </TouchableOpacity>
                     )
                 })
         }
-        </ScrollView>
-        
-        <View style={{ width: '100%', height: '12%', backgroundColor: '#3E3E3E'}}>
+         </ScrollView>
+
+        {state ?   
+        <View style={{ width: '100%', height: '12%', backgroundColor: '#3E3E3E', borderTopLeftRadius: 15, borderTopRightRadius: 15}}>
           <Controls songData ={{"id": "0", "state": "pause", "title": "Childish Gambino - Redbone (Instrumental).mp3", "url": "file:///storage/emulated/0/Download/Childish Gambino - Redbone (Instrumental).mp3"}} />
-        </View>
+        </View> 
+        : <></> }
 
     </View>
     );
@@ -175,3 +147,30 @@ export default Home;
 //   name = 'step-forward' size={30} style={{color: 'white', padding: 10}} />                        
 // </View>
 // </View>
+
+{/* <MultiSlider
+containerStyle={{ marginTop: -23, position: 'absolute' }}
+trackStyle={{backgroundColor: '#7D7D7D', height: 5, borderRadius: 5, }}
+markerStyle={{ backgroundColor: 'white', marginTop: 5, marginLeft: 12 }}
+markerContainerStyle={{justifyContent: 'center'}}
+sliderLength={ 410 }
+showStepMarkers={false}
+//   max={duration == 0 ? 100: progress.duration}
+onValuesChangeFinish={(val) => {
+  TrackPlayer.seekTo(val[0]);
+}}
+step={1}
+//   values={[progress.position]}
+markerSize={30}
+/>
+<View style={{flexDirection: 'row'}}>  
+<View style={{height: '70%', width: '18%', backgroundColor: '#83B29F', borderRadius: 10, margin: '4%',}}>
+
+</View>
+
+<View>
+    <Text style={{color: '#FFF', fontWeight: '500'}}>asd</Text>
+    <Text style={{color: '#FFF', fontWeight: '500', marginTop: 3}}></Text>
+</View>
+
+</View> */}
